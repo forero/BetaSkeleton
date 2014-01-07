@@ -25,6 +25,7 @@ float *load_mock_file(char *filename, int *n_data){
   fread(&dumb, 4, 1, in);
   fread(data, sizeof(float), n_points, in);
   fread(&dumb, 4, 1, in);
- 
+
+  fclose(in);
   return data;
 }
