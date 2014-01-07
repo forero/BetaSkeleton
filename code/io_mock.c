@@ -1,5 +1,27 @@
 #include "io_mock.h"
 
+void dump_mock_file(char *filename, float *data, int n_data){
+  int dumb=4;
+  FILE *out;
+
+  if(!(out = fopen(filename, "w"))){
+    fprintf(stderr, "problem opening file %s\n", filename);
+    exit(1);  
+  }
+  
+  fwrite(&dumb, 4, 1, out);
+  fwrite(&n_data, sizeof(int), 1, out);
+  fwrite(&dumb, 4, 1, out);
+
+  fwrite(&dumb, 4, 1, out);
+  fwrite(data, sizeof(float), n_data, out);
+  fwrite(&dumb, 4, 1, out);
+
+  fclose(out);
+}
+
+
+
 float *load_mock_file(char *filename, int *n_data){
   float *data;
   int n_points;
