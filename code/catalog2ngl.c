@@ -25,6 +25,7 @@ int main(int argc, char **argv){
   float *x, *y, *z, *mass;
   float mass_filter, frac;
   float tmp;
+  int n_in;
   int i;
   FILE *out;
 
@@ -53,12 +54,16 @@ int main(int argc, char **argv){
  
   srand48(n_points);
 
+  n_in=0;
   for(i=0;i<n_points;i++){
     tmp = drand48();
     if((mass[i]> mass_filter) && (tmp<frac)){
       fprintf(out, "%f %f %f\n", x[i], y[i], z[i]);
+      n_in++;
     }
   }
+
+  fprintf(stdout, "The number of selected points is %d\n", n_in);
 
   fclose(out);
 
