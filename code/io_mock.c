@@ -1,5 +1,40 @@
 #include "io_mock.h"
 
+
+int *load_skeleton(char *filename, int *n_data){
+  int n_lines;
+  FILE *in;
+  int i,c;
+  int *skel_data;
+
+  if(!(in=fopen(filename, "r"))){
+    fprintf(stderr, "problem opening file %s\n", filename);
+    exit(1);
+  }
+
+  n_lines = 0;
+  do{
+    c=getc(in);
+    if(c=='\n')
+      n_lines++;
+  }while(c!=EOF);
+  fprintf(stdout, "there are %d lines to read\n", n_lines);
+  rewind(in);
+  
+  if(!(skel_data=malloc(sizeof(int) * 2 * n_lines))){
+    fprintf(stderr, "problem allocating skeleton pair data\n");
+    exit(1);
+  }
+  
+  for(i=0;i<n_lines;i++){
+    fscanf(in, "%d %d\n", &(skel_data[2*i + 0]), &(skel_data[2*i + 1]));
+  }  
+  fclose(in);
+
+  *n_data = n_lines;
+  return skel_data;
+}
+
 void dump_mock_file(char *filename, float *data, int n_data){
   int dumb=4;
   FILE *out;
