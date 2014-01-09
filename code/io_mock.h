@@ -7,5 +7,6 @@
 float * load_mock_file(char *filename, int *n_points);
 void dump_mock_file(char *filename, float *data, int n_data);
 int *load_skeleton(char *filename, int *n_data);
+float *load_ngl_file(char *filename, int *n_data);
 
 #endif
