@@ -27,9 +27,10 @@ test: test_io.x
 # get info from a cartesian catalog to put it into the ngl format
 PATH_PROCESSED=../data/processed/
 PATH_RAW=../data/raw/
-CUT_MASS=5.0E13
-FRAC=0.5
-FILE_NGL=$(PATH_PROCESSED)/ngl_sdss3_17_MASS_$(CUT_MASS)_F_$(FRAC).dat
+CUT_MASS=1.0E14
+FRAC=0.01
+NAME_NGL=ngl_sdss3_17_MASS_$(CUT_MASS)_F_$(FRAC).dat
+FILE_NGL=$(PATH_PROCESSED)/$(NAME_NGL)
 
 cat2ngl: $(FILE_NGL)
 
@@ -38,8 +39,19 @@ $(FILE_NGL): cat2ngl.x
 
 
 # run the skeleton
-#FILE_SKEL=$(PATH_SKELETON)$METHOD\_b1.5_$POS_FILE
-#skeleton: $
+
+EXEC_PATH=/Users/forero/Dropbox/SparseFilaments/code/ngl-beta/binsrc/
+PATH_SKELETON=../data/skeleton/
+METHOD=BSkeleton
+BETA=1.5
+FILE_SKEL=$(PATH_SKELETON)$(METHOD)_$(BETA)_$(NAME_NGL)
+
+skeleton: $(FILE_SKEL)
+
+$(FILE_SKEL): $(FILE_NGL)
+	$(EXEC_PATH)./getNeighborGraph -i $(FILE_NGL) -d 3 -b 10 -m $(METHOD) > $(FILE_SKEL)
+
+
 
 # get cartesian data into spherical data
 spherical:  ../data/raw/r_sdss3_17.dat 
@@ -65,3 +77,5 @@ clean:
 	rm -f *.o
 	rm -f *~
 	rm -f ../data/processed/pos_sdss3_17_sub001.dat
+	rm -f $(FILE_NGL)
+	rm -f $(FILE_SKEL)
