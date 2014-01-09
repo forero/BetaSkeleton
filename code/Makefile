@@ -13,6 +13,12 @@ c2s.x:cartesian2spherical.c io_mock.c io_mock.h
 cat2ngl.x: catalog2ngl.c io_mock.c io_mock.h
 	cc -lm catalog2ngl.c io_mock.c -o cat2ngl.x
 
+clean_skel.x: clean_pairs.c io_mock.c io_mock.h
+	cc -lm clean_pairs.c io_mock.c -o clean_skel.x
+
+skel_shape.x: get_skeleton_shape.c io_mock.c io_mock.h
+	cc -lm get_skeleton_shape.c io_mock.c -o skel_shape.x
+
 test: test_io.x
 	./test_io.x ../data/raw/mass_sdss3_17.dat
 	./test_io.x ../data/raw/x_sdss3_17.dat
@@ -28,7 +34,7 @@ test: test_io.x
 PATH_PROCESSED=../data/processed/
 PATH_RAW=../data/raw/
 CUT_MASS=1.0E14
-FRAC=0.04
+FRAC=0.02
 NAME_NGL=ngl_sdss3_17_MASS_$(CUT_MASS)_F_$(FRAC).dat
 FILE_NGL=$(PATH_PROCESSED)/$(NAME_NGL)
 
@@ -51,7 +57,26 @@ skeleton: $(FILE_SKEL)
 $(FILE_SKEL): $(FILE_NGL)
 	$(EXEC_PATH)./getNeighborGraph -i $(FILE_NGL) -d 3 -b $(BETA) -m $(METHOD) > $(FILE_SKEL)
 
+# clean the pairs in the skeleton
 
+FILE_SKEL_CLEAN=$(PATH_SKELETON)/clean_$(METHOD)_$(BETA)_$(NAME_NGL)
+
+clean_skeleton: $(FILE_SKEL_CLEAN)
+
+$(FILE_SKEL_CLEAN): $(FILE_SKEL) clean_skel.x
+	./clean_skel.x $(FILE_SKEL) $(FILE_SKEL_CLEAN)
+
+# dump lenghts of each edge in the skeleton
+FILE_SKEL_SHAPE_X=$(PATH_SKELETON)/edge_x_$(METHOD)_$(BETA)_$(NAME_NGL)
+FILE_SKEL_SHAPE_Y=$(PATH_SKELETON)/edge_y_$(METHOD)_$(BETA)_$(NAME_NGL)
+FILE_SKEL_SHAPE_Z=$(PATH_SKELETON)/edge_z_$(METHOD)_$(BETA)_$(NAME_NGL)
+FILE_SKEL_SHAPE_ASCII=$(PATH_SKELETON)/edge_xyz_$(METHOD)_$(BETA)_$(NAME_NGL)
+
+shape_skeleton: $(FILE_SKEL_SHAPE_ASCII) 
+
+$(FILE_SKEL_SHAPE_ASCII): $(FILE_SKEL_CLEAN) $(FILE_NGL) skel_shape.x sub_sample.x
+	./skel_shape.x $(FILE_NGL) $(FILE_SKEL_CLEAN) $(FILE_SKEL_SHAPE_X) $(FILE_SKEL_SHAPE_Y) $(FILE_SKEL_SHAPE_Z)
+	./sub_sample.x $(FILE_SKEL_SHAPE_X) $(FILE_SKEL_SHAPE_Y) $(FILE_SKEL_SHAPE_Z) $(FILE_SKEL_SHAPE_ASCII) 1.0
 
 # get cartesian data into spherical data
 spherical:  ../data/raw/r_sdss3_17.dat 
