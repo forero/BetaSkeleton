@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "io_mock.h"
-#define USAGE "./c2s x_file y_file z_file m_file ngl_file m_filter fraction"
+#define USAGE "./cat2ngl.x x_file y_file z_file m_file ngl_file m_filter fraction"
 
 /*
   INPUT:

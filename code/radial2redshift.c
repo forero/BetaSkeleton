@@ -25,8 +25,8 @@ int main(int argc, char **argv){
   float omega_m, omega_l, w;
   float a_exp;
   int RSD;
-  int n_list = 100000;
-  float min_z=0.0, max_z=10.0;
+  int n_list = 200000;
+  float min_z=0.0, max_z=5.0;
   float *z_list, *r_list;
 
 

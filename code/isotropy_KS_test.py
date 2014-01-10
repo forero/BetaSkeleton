@@ -23,9 +23,6 @@ def KS_test_edges(filename):
     KS_stat, p_value = stats.ks_2samp(mu, mu_flat)
     return KS_stat, p_value 
 
-    
-
-
 if __name__ == '__main__':
     filein = sys.argv[1]    
     ks, p_value = KS_test_edges(filein)
