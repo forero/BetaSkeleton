@@ -60,6 +60,15 @@ int main(int argc, char **argv){
     len_x[i] = fabs(ngl_data[3*pair_b + 0] - ngl_data[3*pair_a + 0]);
     len_y[i] = fabs(ngl_data[3*pair_b + 1] - ngl_data[3*pair_a + 1]);
     len_z[i] = fabs(ngl_data[3*pair_b + 2] - ngl_data[3*pair_a + 2]);
+    /*
+    if(i==9){
+      fprintf(stdout, "pair_a pair_b [%d %d]\n", pair_a, pair_b);
+      fprintf(stdout, "paira [x y z] = [%f %f %f]\n", 
+	      ngl_data[3*pair_a + 0],
+	      ngl_data[3*pair_a + 1],
+	      ngl_data[3*pair_a + 2]	      );
+    }
+    */
   }
 
   /*dump the data*/
