@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define D_HUBBLE 3000.0 /*Hubble distance in Mpc/h*/
+#define C_LIGHT 299792.458 /* in km/s */
+#define D_HUBBLE 2997.92458 /*Hubble distance in Mpc/h*/
 
 float * build_comov_r(float *z, int n_points, float omega_m, float omega_l, float w);
 float E_z_value(float z, float omega_m, float omega_l, float w);
