@@ -18,6 +18,11 @@ int main(int argc, char **argv){
   int i;
   float tmp;
 
+  if(argc!=6){
+    fprintf(stderr, "USAGE: %s\n", USAGE);
+    exit(1);
+  }
+
   x = load_mock_file(argv[1], &n_points);
   y = load_mock_file(argv[2], &n_points);
   z = load_mock_file(argv[3], &n_points);
