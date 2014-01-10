@@ -2,3 +2,5 @@
 *.x
 *~
 data/*
+*.ipynb_checkpoints*
+code/*.dat
