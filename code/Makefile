@@ -19,7 +19,14 @@ clean_skel.x: clean_pairs.c io_mock.c io_mock.h
 skel_shape.x: get_skeleton_shape.c io_mock.c io_mock.h
 	cc -lm get_skeleton_shape.c io_mock.c -o skel_shape.x
 
-test: test_io.x
+test_cosmo.x: test_cosmo.c cosmo_fun.c cosmo_fun.h
+	cc -lm test_cosmo.c cosmo_fun.c -o test_cosmo.x
+
+
+test_cosmo: test_cosmo.x
+	./test_cosmo.x
+
+test_io: test_io.x
 	./test_io.x ../data/raw/mass_sdss3_17.dat
 	./test_io.x ../data/raw/x_sdss3_17.dat
 	./test_io.x ../data/raw/y_sdss3_17.dat
@@ -34,7 +41,7 @@ test: test_io.x
 PATH_PROCESSED=../data/processed/
 PATH_RAW=../data/raw/
 CUT_MASS=1.0E14
-FRAC=0.02
+FRAC=0.03
 NAME_NGL=ngl_sdss3_17_MASS_$(CUT_MASS)_F_$(FRAC).dat
 FILE_NGL=$(PATH_PROCESSED)/$(NAME_NGL)
 
@@ -49,7 +56,7 @@ $(FILE_NGL): cat2ngl.x
 EXEC_PATH=/Users/forero/Dropbox/SparseFilaments/code/ngl-beta/binsrc/
 PATH_SKELETON=../data/skeleton/
 METHOD=BSkeleton
-BETA=20
+BETA=10
 FILE_SKEL=$(PATH_SKELETON)$(METHOD)_$(BETA)_$(NAME_NGL)
 
 skeleton: $(FILE_SKEL)
