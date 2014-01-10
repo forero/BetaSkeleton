@@ -23,6 +23,7 @@ int main(int argc, char **argv){
   int n_points;
   float *r, *phi, *theta;
   float *x, *y, *z;
+  float tmp;
   int i;
 
   if(argc!=7){
@@ -43,7 +44,8 @@ int main(int argc, char **argv){
   for(i=0;i<n_points;i++){
     r[i] = sqrt(pow(x[i],2) + pow(y[i],2) + pow(z[i],2));
     theta[i] = acos(z[i]/r[i]);
-    phi[i] = acos(x[i]/abs(r[i]*sin(theta[i])));
+    tmp = sqrt(x[i]*x[i] + y[i]*y[i]);
+    phi[i] = acos(x[i]/tmp);
     if(y[i]<=0.0){
       phi[i] = 2.0*PI - phi[i];
     }	
