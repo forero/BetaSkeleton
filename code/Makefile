@@ -10,6 +10,12 @@ rv.x: radial_velocities.c io_mock.c io_mock.h
 c2s.x:cartesian2spherical.c io_mock.c io_mock.h
 	cc -lm cartesian2spherical.c io_mock.c -o c2s.x
 
+r2z.x: radial2redshift.c io_mock.c cosmo_fun.c io_mock.h cosmo_fun.h
+	cc -lm radial2redshift.c io_mock.c cosmo_fun.c -o r2z.x
+
+z2r.x: redshift2radial.c io_mock.c cosmo_fun.c io_mock.h cosmo_fun.h
+	cc -lm redshift2radial.c io_mock.c cosmo_fun.c -o z2r.x
+
 cat2ngl.x: catalog2ngl.c io_mock.c io_mock.h
 	cc -lm catalog2ngl.c io_mock.c -o cat2ngl.x
 
@@ -51,6 +57,7 @@ $(FILE_NGL): cat2ngl.x
 	./cat2ngl.x $(PATH_RAW)/x_sdss3_17.dat $(PATH_RAW)/y_sdss3_17.dat $(PATH_RAW)/z_sdss3_17.dat $(PATH_RAW)/mass_sdss3_17.dat $(FILE_NGL) $(CUT_MASS) $(FRAC)
 
 
+
 # run the skeleton
 
 EXEC_PATH=/Users/forero/Dropbox/SparseFilaments/code/ngl-beta/binsrc/
@@ -85,6 +92,52 @@ $(FILE_SKEL_SHAPE_ASCII): $(FILE_SKEL_CLEAN) $(FILE_NGL) skel_shape.x sub_sample
 	./skel_shape.x $(FILE_NGL) $(FILE_SKEL_CLEAN) $(FILE_SKEL_SHAPE_X) $(FILE_SKEL_SHAPE_Y) $(FILE_SKEL_SHAPE_Z)
 	./sub_sample.x $(FILE_SKEL_SHAPE_X) $(FILE_SKEL_SHAPE_Y) $(FILE_SKEL_SHAPE_Z) $(FILE_SKEL_SHAPE_ASCII) 1.0
 
+# get radial data into redshift space
+TRUE_OMEGA_M=0.30
+TRUE_OMEGA_L=0.70
+TRUE_W=-1.0
+FILE_Z_SHIFT_NORSD=$(PATH_PROCESSED)/z_shift_norsd_$(TRUE_OMEGA_M)_$(TRUE_OMEGA_L)_$(TRUE_W)_sdss3_17.dat
+FILE_Z_SHIFT_RSD=$(PATH_PROCESSED)/z_shift_rsd_$(TRUE_OMEGA_M)_$(TRUE_OMEGA_L)_$(TRUE_W)_sdss3_17.dat
+FILE_R_FROM_MOCK=$(PATH_PROCESSED)/r_sdss3_17.dat
+FILE_VR_FROM_MOCK=$(PATH_PROCESSED)/vr_sdss3_17.dat
+
+
+r2z: $(FILE_Z_SHIFT_NORSD) $(FILE_Z_SHIFT_RSD)
+
+
+$(FILE_Z_SHIFT_NORSD): r2z.x $(FILE_R_FROM_MOCK) $(FILE_VR_FROM_MOCK)
+	./r2z.x $(FILE_R_FROM_MOCK) $(FILE_VR_FROM_MOCK) $(TRUE_OMEGA_M) $(TRUE_OMEGA_L) $(TRUE_W) 0 $(FILE_Z_SHIFT_NORSD)
+
+$(FILE_Z_SHIFT_RSD): r2z.x $(FILE_R_FROM_MOCK) $(FILE_VR_FROM_MOCK)
+	./r2z.x $(FILE_R_FROM_MOCK) $(FILE_VR_FROM_MOCK) $(TRUE_OMEGA_M) $(TRUE_OMEGA_L) $(TRUE_W) 1 $(FILE_Z_SHIFT_RSD)
+
+
+OMEGA_M=0.30
+OMEGA_L=0.70
+W=-1.0
+FILE_R_FROM_Z_SHIFT_NORSD=$(PATH_PROCESSED)/r_built_norsd_$(OMEGA_M)_$(OMEGA_L)_$(W)_sdss3_17.dat
+FILE_R_FROM_Z_SHIFT_RSD=$(PATH_PROCESSED)/r_built_rsd_$(OMEGA_M)_$(OMEGA_L)_$(W)_sdss3_17.dat
+
+z2r: $(FILE_R_FROM_Z_SHIFT_NORSD) $(FILE_R_FROM_Z_SHIFT_RSD)
+
+$(FILE_R_FROM_Z_SHIFT_NORSD): z2r.x $(FILE_Z_SHIFT_NORSD)
+	./z2r.x $(FILE_Z_SHIFT_NORSD) $(OMEGA_M) $(OMEGA_L) $(W) $(FILE_R_FROM_Z_SHIFT_NORSD)
+
+$(FILE_R_FROM_Z_SHIFT_RSD): z2r.x $(FILE_Z_SHIFT_RSD)
+	./z2r.x $(FILE_Z_SHIFT_RSD) $(OMEGA_M) $(OMEGA_L) $(W) $(FILE_R_FROM_Z_SHIFT_RSD)
+
+
+
+#get the radial velocity
+FILE_X_RAW=$(PATH_RAW)/x_sdss3_17.dat
+FILE_Y_RAW=$(PATH_RAW)/y_sdss3_17.dat
+FILE_Z_RAW=$(PATH_RAW)/z_sdss3_17.dat
+FILE_VX_RAW=$(PATH_RAW)/vx_sdss3_17.dat
+FILE_VY_RAW=$(PATH_RAW)/vy_sdss3_17.dat
+FILE_VZ_RAW=$(PATH_RAW)/vz_sdss3_17.dat
+$(FILE_VR_FROM_MOCK): rv.x
+	./rv.x $(FILE_X_RAW) $(FILE_Y_RAW) $(FILE_Z_RAW) $(FILE_VX_RAW) $(FILE_VY_RAW) $(FILE_VZ_RAW) $(FILE_VR_FROM_MOCK)
+
 # get cartesian data into spherical data
 spherical:  ../data/raw/r_sdss3_17.dat 
 
@@ -97,12 +150,6 @@ subsample:  ../data/processed/pos_sdss3_17_sub001.dat
 
 ../data/raw/pos_sdss3_17_sub001.dat: sub_sample.x	
 	./sub_sample.x ../data/raw/x_sdss3_17.dat ../data/raw/y_sdss3_17.dat ../data/raw/z_sdss3_17.dat ../data/processed/pos_sdss3_17_sub001.dat 0.01
-
-# computing the radial velocity component
-radial:	../data/processed/vr_sdss3_17.dat
-
-../data/raw/vr_sdss3_17.dat: rv.x
-	./rv.x ../data/raw/x_sdss3_17.dat ../data/raw/y_sdss3_17.dat ../data/raw/z_sdss3_17.dat ../data/raw/vx_sdss3_17.dat ../data/raw/vy_sdss3_17.dat ../data/raw/vz_sdss3_17.dat ../data/processed/vr_sdss3_17.dat 
 
 clean: 
 	rm -f *.x 
