@@ -11,7 +11,7 @@ MOCK_NAME=sdss3_$(MOCK_ID)
 
 # Cuts before dumping into ascii NGL format (needed by the skeleton)
 CUT_MASS=1.0E14
-FRAC=0.05
+FRAC=0.10
 
 # Skeleton parameters
 METHOD=BSkeleton
@@ -23,7 +23,7 @@ TRUE_OMEGA_L=0.70
 TRUE_W=-1.0
 
 # Are we using redshift distortions? 1=YES 0=NO
-RSD=1
+RSD=0
 
 # Cosmological parameters used to reconstruct after RSD distortion. These might be the wrong ones.
 OMEGA_M=0.30
