@@ -1,17 +1,15 @@
 # Setup paths
 PATH_POST=../data/processed/
 PATH_RAW=../data/raw/
-EXEC_PATH=/Users/forero/Dropbox/SparseFilaments/code/ngl-beta/binsrc/
+EXEC_PATH=/home/forero/software/ngl-beta/build/binsrc/
 PATH_SKELETON=../data/skeleton/
 PATH_STATS=../data/stats/
 MOCK_ID=17
 MOCK_NAME=sdss3_$(MOCK_ID)
 
-
-
 # Cuts before dumping into ascii NGL format (needed by the skeleton)
 CUT_MASS=1.0E14
-FRAC=0.10
+FRAC=0.05
 
 # Skeleton parameters
 METHOD=BSkeleton
@@ -121,22 +119,22 @@ sub_sample.x: sub_sample.c io_mock.c io_mock.h
 	cc sub_sample.c io_mock.c -o sub_sample.x
 
 rv.x: radial_velocities.c io_mock.c io_mock.h
-	cc -lm radial_velocities.c io_mock.c -o rv.x
+	cc radial_velocities.c io_mock.c -lm -o rv.x
 
 c2s.x:cartesian2spherical.c io_mock.c io_mock.h
-	cc -lm cartesian2spherical.c io_mock.c -o c2s.x
+	cc cartesian2spherical.c io_mock.c -lm -o c2s.x
 
 s2c.x:spherical2cartesian.c io_mock.c io_mock.h
-	cc -lm spherical2cartesian.c io_mock.c -o s2c.x
+	cc spherical2cartesian.c io_mock.c -lm -o s2c.x
 
 r2z.x: radial2redshift.c io_mock.c cosmo_fun.c io_mock.h cosmo_fun.h
-	cc -lm radial2redshift.c io_mock.c cosmo_fun.c -o r2z.x
+	cc radial2redshift.c io_mock.c cosmo_fun.c -lm -o r2z.x
 
 z2r.x: redshift2radial.c io_mock.c cosmo_fun.c io_mock.h cosmo_fun.h
-	cc -lm redshift2radial.c io_mock.c cosmo_fun.c -o z2r.x
+	cc redshift2radial.c io_mock.c cosmo_fun.c -lm -o z2r.x
 
 cat2ngl.x: catalog2ngl.c io_mock.c io_mock.h
-	cc -lm catalog2ngl.c io_mock.c -o cat2ngl.x
+	cc catalog2ngl.c io_mock.c -lm -o cat2ngl.x
 
 clean_skel.x: clean_pairs.c io_mock.c io_mock.h
 	cc -lm clean_pairs.c io_mock.c -o clean_skel.x
