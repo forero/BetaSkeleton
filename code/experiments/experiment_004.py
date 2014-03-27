@@ -1,8 +1,8 @@
 from subprocess import call
 
 total_mocks = 27
-base_mass = [1.0E13]
-base_f_in = [0.004]
+base_mass = [1.0E14]
+base_f_in = [0.10]
 rsd_options = [0,1]
 beta_values = [1,5,10,15,20,25,30]
 
