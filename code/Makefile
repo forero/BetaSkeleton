@@ -1,19 +1,26 @@
+# parameters to be fed in the command line
+#MOCK_ID
+#BETA
+#CUT_MASS
+#FRAC
+#RSD
+
 # Setup paths
 PATH_POST=../data/processed/
 PATH_RAW=../data/raw/
 EXEC_PATH=/home/forero/software/ngl-beta/build/binsrc/
 PATH_SKELETON=../data/skeleton/
 PATH_STATS=../data/stats/
-MOCK_ID=17
+#MOCK_ID=17
 MOCK_NAME=sdss3_$(MOCK_ID)
 
 # Cuts before dumping into ascii NGL format (needed by the skeleton)
-CUT_MASS=1.0E14
-FRAC=0.05
+#CUT_MASS=5.0E13
+#FRAC=0.02
 
 # Skeleton parameters
 METHOD=BSkeleton
-BETA=10
+#BETA=10
 
 # Cosmological parameters used to distort the original mock 
 TRUE_OMEGA_M=0.30
@@ -21,7 +28,7 @@ TRUE_OMEGA_L=0.70
 TRUE_W=-1.0
 
 # Are we using redshift distortions? 1=YES 0=NO
-RSD=0
+#RSD=0
 
 # Cosmological parameters used to reconstruct after RSD distortion. These might be the wrong ones.
 OMEGA_M=0.30
@@ -55,17 +62,18 @@ FILE_Y_POS_RECONSTRUCT=$(PATH_POST)/y_$(MOCK_NAME)_RSD_$(RSD)_OM_$(OMEGA_M)_OL_$
 FILE_Z_POS_RECONSTRUCT=$(PATH_POST)/z_$(MOCK_NAME)_RSD_$(RSD)_OM_$(OMEGA_M)_OL_$(OMEGA_L).dat
 
 # Files for the skeleton
-FILE_NGL=$(PATH_SKELETON)/NGL_$(MOCK_NAME)_RSD_$(RSD)_OM_$(OMEGA_M)_OL_$(OMEGA_L)_FRAC_$(FRAC).dat
-FILE_NGL_BENCH=$(PATH_SKELETON)/NGL_$(MOCK_NAME)_bench_FRAC_$(FRAC).dat
-FILE_SKEL=$(PATH_SKELETON)/$(METHOD)_$(MOCK_NAME)_RSD_$(RSD)_OM_$(OMEGA_M)_OL_$(OMEGA_L)_FRAC_$(FRAC)_BETA_$(BETA).dat
-FILE_SKEL_CLEAN=$(PATH_SKELETON)/clean_$(METHOD)_$(MOCK_NAME)_RSD_$(RSD)_OM_$(OMEGA_M)_OL_$(OMEGA_L)_FRAC_$(FRAC)_BETA_$(BETA).dat
-FILE_SKEL_SHAPE_X=$(PATH_SKELETON)/edge_x_$(METHOD)_$(MOCK_NAME)_RSD_$(RSD)_OM_$(OMEGA_M)_OL_$(OMEGA_L)_FRAC_$(FRAC)_BETA_$(BETA).dat
-FILE_SKEL_SHAPE_Y=$(PATH_SKELETON)/edge_y_$(METHOD)_$(MOCK_NAME)_RSD_$(RSD)_OM_$(OMEGA_M)_OL_$(OMEGA_L)_FRAC_$(FRAC)_BETA_$(BETA).dat
-FILE_SKEL_SHAPE_Z=$(PATH_SKELETON)/edge_z_$(METHOD)_$(MOCK_NAME)_RSD_$(RSD)_OM_$(OMEGA_M)_OL_$(OMEGA_L)_FRAC_$(FRAC)_BETA_$(BETA).dat
-FILE_SKEL_SHAPE_ASCII=$(PATH_SKELETON)/edge_xyz_$(METHOD)_$(MOCK_NAME)_RSD_$(RSD)_OM_$(OMEGA_M)_OL_$(OMEGA_L)_FRAC_$(FRAC)_BETA_$(BETA).dat
+STAMP=$(MOCK_NAME)_RSD_$(RSD)_OM_$(OMEGA_M)_OL_$(OMEGA_L)_MASS_$(CUT_MASS)_FRAC_$(FRAC)
+FILE_NGL=$(PATH_SKELETON)/NGL_$(STAMP).dat
+FILE_NGL_BENCH=$(PATH_SKELETON)/NGL_bench_$(STAMP).dat
+FILE_SKEL=$(PATH_SKELETON)/$(METHOD)_$(STAMP).dat
+FILE_SKEL_CLEAN=$(PATH_SKELETON)/clean_$(METHOD)_$(STAMP).dat
+FILE_SKEL_SHAPE_X=$(PATH_SKELETON)/edge_x_$(METHOD)_$(STAMP).dat
+FILE_SKEL_SHAPE_Y=$(PATH_SKELETON)/edge_y_$(METHOD)_$(STAMP).dat
+FILE_SKEL_SHAPE_Z=$(PATH_SKELETON)/edge_z_$(METHOD)_$(STAMP).dat
+FILE_SKEL_SHAPE_ASCII=$(PATH_SKELETON)/edge_xyz_$(METHOD)_$(STAMP).dat
 
 # Final KS stats
-FILE_SKEL_SHAPE_ASCII_KS=$(PATH_STATS)/KS_$(METHOD)_$(MOCK_NAME)_RSD_$(RSD)_OM_$(OMEGA_M)_OL_$(OMEGA_L)_FRAC_$(FRAC)_BETA_$(BETA).dat
+FILE_SKEL_SHAPE_ASCII_KS=$(PATH_STATS)/KS_$(METHOD)_$(STAMP).dat
 
 #compute the spherical coordinates from cartesian
 $(FILE_R_POS): c2s.x
