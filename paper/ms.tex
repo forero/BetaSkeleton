@@ -1,0 +1,119 @@
+\documentclass{emulateapj}
+%\documentclass{aastex}
+\submitted{{\it Submitted for publication in ApJL}}
+\usepackage {graphicx}
+
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{graphics}
+\usepackage{epsfig}  
+\usepackage{float}
+\bibliographystyle{apj}
+\def\be{\begin{equation}}
+\def\ee{\end{equation}}
+\def\ba{\begin{eqnarray}}
+\def\ea{\end{eqnarray}}
+
+\newcommand{\documentname}{research note}
+\newcommand{\avg}[1]{\langle{#1}\rangle}  
+\newcommand{\skel}{$\beta$-Skeleton}  
+\newcommand{\hMpc}{{\ifmmode{h^{-1}{\rm Mpc}}\else{$h^{-1}$Mpc }\fi}}  
+\newcommand{\hGpc}{{\ifmmode{h^{-1}{\rm Gpc}}\else{$h^{-1}$Gpc }\fi}}  
+\newcommand{\hmpc}{{\ifmmode{h^{-1}{\rm Mpc}}\else{$h^{-1}$Mpc }\fi}}  
+\newcommand{\hkpc}{{\ifmmode{h^{-1}{\rm kpc}}\else{$h^{-1}$kpc }\fi}}  
+\newcommand{\hMsun}{{\ifmmode{h^{-1}{\rm {M_{\odot}}}}\else{$h^{-1}{\rm{M_{\odot}}}$}\fi}}  
+\newcommand{\hmsun}{{\ifmmode{h^{-1}{\rm {M_{\odot}}}}\else{$h^{-1}{\rm{M_{\odot}}}$}\fi}}  
+\newcommand{\Msun}{{\ifmmode{{\rm {M_{\odot}}}}\else{${\rm{M_{\odot}}}$}\fi}}  
+\newcommand{\msun}{{\ifmmode{{\rm {M_{\odot}}}}\else{${\rm{M_{\odot}}}$}\fi}}  
+\newcommand{\kms}{{\ifmmode{{\mathrm{\,km\ s}^{-1}}}\else{\,km~s$^{-1}$}\fi}}
+\newcommand{\bullb}{MACS J0025.4-1222}
+\newcommand{\bulla}{1E0657---56} 
+\newcommand{\bullg}{SL2S J08544-0121}
+\shorttitle{Bullet Groups}
+\shortauthors{Fern\'andez-Trincado et al.}
+
+\begin{document} 
+
+\title{The $\beta$-skeleton as a cosmological tool}
+\author{J. E. Forero-Romero$^1$,
+  Xiao-Dong Li$^2$  and Changbom Park$^{1}$}
+\affil{$^1$ Departamento de F\'{i}sica, Universidad de los Andes,
+  Cra. 1 No. 18A-10, Edificio Ip, Bogot\'a, Colombia\\ 
+       $^2$ School of Physics, Korea Institute for Advanced Study,
+  Heogiro 85, Seoul 130-722, Korea}
+\email{je.forero@uniandes.edu.co}
+\begin{abstract}
+We explore the application of the $\beta$-skeleton, a concept from
+geometric graph theory, as tool to describe the large scale structure
+of the Universe.
+\end{abstract}
+
+\keywords{methods: numerical}
+
+\section{Introduction}
+
+
+\section{$\beta$-skeleton definition}
+
+The \skel\ is a non-directed graph that can be defined on a set of
+points in Euclidian space \citep{beta-def}.
+
+We use the Neighboring Graph Library (NGL) \citep{Correa2011}to
+compute the \skel\ of a set of points in 3D Euclidian space.  The NGL
+is publicly available \footnote{{\texttt http://www.ngraph.org/}}.
+
+\section{Simulation and Mock Catalogs}
+\label{sec:simulation}
+
+The data set is based on the Horizon Run 3 simulation data
+\citep{HR3}. We use 27 mocks catalogs constructed to be close to the
+number density of Luminous Red Galaxies in  
+
+
+\section{Numerical Experiments}
+\label{sec:experiments}
+
+We construct the \skel\ from mock catalogs in redshift space that were
+reconstructed in real space using cosmological parameters
+$\Omega_m^{\prime}$, $\Omega_\Lambda^\prime$ and $\omega^{\prime}$,
+where the prime indicates that their values are, in general, not the
+values used in the simulation. In this \documentname\ we perform a
+first study where these values correspond to the simulation values.
+
+After each mock is reconstructed into real space we filter the number
+of points using two parameters. The minimal mass of halos to be
+included, $M_{\rm min}$; and the fraction of halos above this mass
+that will be left in the final sample, $f_{\rm in}$. We use the
+following set of pairs of values for $(M_{\rm min}, f_{\rm in})=\{(,),(,),(,),(,),(,),(,)\}$, this selection fixes the total number of particles in the catalog
+to $\{,\}$. 
+
+ 
+
+
+
+
+
+\section{Results}
+\label{sec:results}
+
+\section{Discussion}
+\label{sec:discussion}
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+%\begin{figure*}
+%\begin{center}
+%\includegraphics[width=0.9\textwidth]{figure_1.eps}
+%\end{center}
+%\caption{}
+%\end{figure*}
+
+
+J.E.F-R acknowledges support from Vicerrector\'ia de
+Investigaciones through a FAPA starting grant.
+
+\bibliographystyle{apj}
+\bibliography{references} 
+
+\end{document}
