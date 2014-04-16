@@ -5,18 +5,18 @@
 #FRAC
 #RSD
 
-MIN_THETA=90.0
-MAX_THETA=180.0
-MIN_PHI=0.0
-MAX_PHI=90.0
-MIN_R=1300.0
-MAX_R=1320.0
+#MIN_THETA=90.0
+#MAX_THETA=180.0
+#MIN_PHI=0.0
+#MAX_PHI=90.0
+#MIN_R=1300.0
+#MAX_R=1320.0
 
 # Setup paths
 PATH_POST=../data/processed/
 PATH_RAW=../data/raw/
-#EXEC_PATH=/home/forero/software/ngl-beta/build/binsrc/
-EXEC_PATH=/Users/forero/Dropbox/ngl-beta/build/binsrc/
+EXEC_PATH=/home/forero/software/ngl-beta/build/binsrc/
+#EXEC_PATH=/Users/forero/Dropbox/ngl-beta/build/binsrc/
 PATH_SKELETON=../data/skeleton/
 PATH_STATS=../data/stats/
 #MOCK_ID=17
@@ -87,7 +87,7 @@ FILE_SKEL_SHAPE_Z=$(PATH_SKELETON)/edge_z_$(METHOD)_$(FINAL_TAG).dat
 FILE_SKEL_SHAPE_ASCII=$(PATH_SKELETON)/edge_xyz_$(METHOD)_$(FINAL_TAG).dat
 
 # Final KS stats
-FILE_SKEL_SHAPE_ASCII_KS=$(PATH_STATS)/KS_$(METHOD)_$(STAMP).dat
+FILE_SKEL_SHAPE_ASCII_KS=$(PATH_STATS)/KS_$(METHOD)_$(FINAL_TAG).dat
 
 #compute the spherical coordinates from cartesian
 $(FILE_R_POS): c2s.x
@@ -185,4 +185,3 @@ clean:
 	rm -f *.o
 	rm -f *~
 	rm -f $(FILE_SKEL_SHAPE_ASCII_KS)
-	rm -f $(FILE_Z_SHIFT)
