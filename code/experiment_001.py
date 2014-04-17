@@ -30,4 +30,4 @@ for i_mock in range(total_mocks):
                                       i_min_phi, i_max_phi, min_r, max_r, omega_m, 1.0 - omega_m, w)
                          
                     print command_all
-#                    retcode = call(command_all,shell=True)
+                    retcode = call(command_all,shell=True)
